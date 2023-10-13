@@ -49,7 +49,7 @@ PRODUCT_VENDOR_PROPERTIES += \
     ro.vendor.extension_library=libqti-perfd-client.so \
     ro.vendor.perf.scroll_opt=1 \
     ro.vendor.qspm.enable=true \
-    vendor.power.pasr.enabled=false
+    vendor.power.pasr.enabled=true
 
 ifneq (,$(filter lahaina, $(TARGET_MIKU_BOOST_FRAMEWORK_PLATFORM)))
 PRODUCT_VENDOR_PROPERTIES += \
@@ -67,6 +67,13 @@ endif
 # Disable the poweropt service for <5.4 platforms.
 ifneq (,$(filter sdm660 sm6150, $(TARGET_MIKU_BOOST_FRAMEWORK_PLATFORM)))
 PRODUCT_PACKAGES += poweropt-service-disable.rc
+endif
+
+# Disable PASR for sdm660
+ifneq (,$(filter sdm660, $(TARGET_MIKU_BOOST_FRAMEWORK_PLATFORM)))
+PRODUCT_VENDOR_PROPERTIES += vendor.pasr.activemode.enabled=false
+else
+PRODUCT_VENDOR_PROPERTIES += vendor.pasr.activemode.enabled=true
 endif
 
 # Get non-open-source specific aspects
